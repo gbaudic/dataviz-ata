@@ -1,0 +1,86 @@
+Descriptif général des données DAtaViz
+
+Les données sont fournies aux Participants après inscription, sous forme de fichier plat au format csv.
+Elles concernent le trafic commercial touchant la France métropolitaine (domestique et international).
+
+Version 03/04/2018
+
+
+-------------------------------------------------------------
+
+* Fichiers DataViz_TRA_[i].csv 
+contenant le trafic mensuel de l’année i (de 1990 à 2016), par paire de villes (seuil à 500 pax mensuels) 
+avec les champs suivants :
+
+- ANMOIS : année et mois (ex : 201601 pour janvier 2016)
+- DEP : ville de départ (code OACI)
+- ARR : ville d’arrivée (code OACI)
+- FSC : faisceau (LC, MC, CC pour Long/Moyen/Court-Courrier)
+- ZON : zone d’origine ou destination (D : domestique, O : outre-mer, I : international)
+- NVOLS : nombre de vols commerciaux
+- PAX_FS : nombre de passagers à bord
+
+Nota : trafics en dessous du seuil rassemblés dans des enregistrements codés Zxx_ («Autres Aéroports...»)
+
+
+-------------------------------------------------------------
+
+* Fichiers DataViz_Retard_[i].csv
+
+contenant le retard mensuel de l’année i (de 2012 à 2016) 
+par paire de villes pour les vols passagers réguliers (seuil à 500 pax et 10 vols mensuels) 
+avec les champs suivants :
+
+- ANMOIS : année et mois (ex : 201601 pour janvier 2016)
+- DEP : ville de départ (code OACI)
+- ARR : ville d’arrivée (code OACI)
+- PC15_D : pourcentage de vols ayant un retard >15’ au départ
+- PC15_A : pourcentage de vols ayant un retard >15’ à l’arrivée
+- RETARD_D : retard moyen par vol au départ 
+- RETARD_A : retard moyen par vol à l’arrivée 
+
+Nota :
+- retard moyen compté dès la première minute pour tous les vols passagers réguliers
+- données non disponibles sur les aéroports à l’étranger et sur certains aéroports français 
+
+
+-------------------------------------------------------------
+
+* Fichiers DataViz_Emi_[i].csv
+
+contenant les émissions LTO mensuelles de l’année i (de 2000 à 2016), 
+par aéroport (TOP10), faisceau, zone et catégorie d’avion 
+avec les champs suivants :
+
+- ANMOIS : année et mois (ex : 201601 pour janvier 2016)
+- APT : aéroport (code OACI)
+- FSC : faisceau (LC, MC, CC pour Long/Moyen/Court-Courrier)
+- ZON : zone d’origine ou destination (D : domestique, O : outre-mer, I : international)
+- CAT : catégorie avion (A : <100 sièges, B : 100 à 220 sièges, C : >220 siège)
+- MVT : nombre de mouvements commerciaux (arrivées + départs)
+- PEQ : nombre de passagers equivalents à bord (1 PEQ = 1 PAX ou 100 kg fret/poste)
+- CO2 : émissions CO2 (en kilotonnes)
+- NOX : émissions NOX (en tonnes)
+- COVNM : émissions COV nom méthanique (en tonnes)
+- TSP : émissions particules (en tonnes)
+
+Nota : les émissions correspondent à la phase LTO, située entre le sol et 1000 mètres d’altitude,
+qui englobe le roulage, le décollage, la montée initiale et l’atterrissage ;
+elles sont estimées à partir du calculateur Tarmaac de la DGAC 
+(voir http://eco-calculateur.aviation-civile.gouv.fr/)
+
+
+-------------------------------------------------------------
+
+* Fichier DataViz_Aeroport.csv
+
+contenant la liste des aéroports 
+avec les champs suivants :
+
+- APT : code OACI de l’aéroport
+- APT_NOM : nom de l’aéroport
+- PAYS_ISO2 : code ISO2 du pays de l’aéroport
+- PAYS_NOM : nom du pays
+- PAYS_FSC : faisceau du pays (LC, MC, CC pour Long/Moyen/Court-Courrier)
+- PAYS_ZON : zone du pays (D : domestique, O : outre-mer, I : international)
+- APT_LAT, APT_LONG : latitude et longitude de l’aéroport (en degré décimal)
