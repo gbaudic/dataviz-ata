@@ -4,12 +4,17 @@ import { FormsModule }    from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AirportComponent } from './airport/airport.component';
-
+import { AirportComparisonComponent } from './airport-comparison/airport-comparison.component';
+import { AirportDetailsComponent } from './airport-details/airport-details.component';
+import { AirportDescriptionComponent } from './airport-description/airport-description.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AirportComponent
+    AirportComponent,
+    AirportComparisonComponent,
+    AirportDetailsComponent,
+    AirportDescriptionComponent
   ],
   imports: [
     BrowserModule
