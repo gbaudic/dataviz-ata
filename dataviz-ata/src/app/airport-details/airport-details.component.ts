@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { TrafficService } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
 import { AirportListService } from 'app/airport-list.service';
@@ -20,6 +20,9 @@ export class AirportDetailsComponent implements OnInit {
 			  private airports: AirportListService) { }
 
   ngOnInit() {
+  }
+  
+  ngOnChanges() {
   }
 
 }
