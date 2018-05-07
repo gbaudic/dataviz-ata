@@ -38,9 +38,10 @@ export class AirportComponent implements OnInit {
 
 export class AirportDescription {
   oaci: string;
-  iata: string;  // 3-letter - replace with correct name
+  iata: string;  // 3-letter
   name: string;
   country: string;
   lat: number;
   long: number;
+  nb_destinations: number;
 }
