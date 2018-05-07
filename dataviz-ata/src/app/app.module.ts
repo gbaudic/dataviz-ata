@@ -7,6 +7,7 @@ import { AirportComponent } from './airport/airport.component';
 import { AirportComparisonComponent } from './airport-comparison/airport-comparison.component';
 import { AirportDetailsComponent } from './airport-details/airport-details.component';
 import { AirportDescriptionComponent } from './airport-description/airport-description.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AirportDescriptionComponent } from './airport-description/airport-descr
     AirportDescriptionComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
