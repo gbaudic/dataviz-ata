@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AirportListService } from 'app/airport-list.service';
+import { AirportDescriptionComponent} from 'app/airport-description/airport-description.component';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-airport',
@@ -7,17 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AirportComponent implements OnInit {
   currentAirport: AirportDescription;
+  oaci: string;
+  mymap: any;
 
-  constructor() { }
+  constructor(private airportList: AirportListService) { }
 
   ngOnInit() {
+    this.mymap = L.map('mapid').setView([46.449, 2.210], 6);
+
+	L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+      attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+      minZoom: 1,
+      maxZoom: 20
+    }).addTo(this.mymap);
+  
+    // get list, create markers
+	this.airportList.getList().subscribe(res => {
+	  for (let ap of res) {
+	    L.marker([ap.lat, ap.long],{title: `${ap.name.toTitleCase()} (${ap.oaci})`}).addTo(this.mymap)
+		  .on('click',() => { this.oaci = ap.oaci; });
+	  }
+	});
   }
 
 }
 
 export class AirportDescription {
   oaci: string;
-  code: string;  // 3-letter - replace with correct name
+  iata: string;  // 3-letter - replace with correct name
   name: string;
   country: string;
   lat: number;

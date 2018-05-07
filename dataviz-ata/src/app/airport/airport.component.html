@@ -1,2 +1,8 @@
-<h1>{{currentAirport.name | titlecase}} ({{currentAirport.oaci}})</h1>
-<p></p>
+<div class="row">
+	<div class="col-10">
+		<div id="mapid"></div>
+	</div>
+	<div class="col-2">
+		<airport-description [oaci]="oaci"></airport-description>
+	</div>
+</div>
