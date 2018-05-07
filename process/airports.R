@@ -81,12 +81,12 @@ for(i in c(1990:year_max)) {
 
 
 ## Final step: export files
-print(tojson(airports_FR));
+writeLines(tojson(airports_FR),"airports.ts");
 
-print(tojson(top10));
-print(tojson(traffics));
-print(tojson(emissions));
-print(tojson(flights));
+writeLines(tojson(top10),"top10.ts");
+writeLines(tojson(traffics),"passengers.ts");
+writeLines(tojson(emissions),"emissions.ts");
+writeLines(tojson(flights),"flights.ts");
 
 ## Utility functions from Rosetta Code, covered by GNU FDL
 

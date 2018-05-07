@@ -1,47 +1,53 @@
-<h1>{{airport.name | titlecase}} ({{airport.oaci}})</h1>
 
-<p><b>Passagers en {{lastYear}}<b> {{lastPassengers}}</p>
-<p><b>Destinations desservies en {{lastYear}}</b> {{airport.nb_destinations}}</p>
+<div *ngIf="airport.oaci; else #noAirport">
+	<h1>{{airport.name | titlecase}} ({{airport.oaci}})</h1>
 
-<h2>Emissions polluantes ({{lastYear}}) en tonnes</h2>
+	<p><b>Passagers en {{lastYear}}<b> {{lastPassengers}}</p>
+	<p><b>Destinations desservies en {{lastYear}}</b> {{airport.nb_destinations}}</p>
 
-<div *ngIf="emissions.length > 0; else noEmissions">
-<p><b>CO2</b> {{emissions[0] / 1000 }}<br><!-- kilotons -->
-<b>Oxydes d'azote</b> {{emissions[1]}}<br>
-<b>COV non méthanique</b> {{emissions[2]}}<br>
-<b>Particules</b> {{emissions[3]}}</p>
+	<h2>Emissions polluantes ({{lastYear}}) en tonnes</h2>
+
+	<div *ngIf="emissions.length > 0; else noEmissions">
+	<p><b>CO2</b> {{emissions[0] * 1000 }}<br><!-- kilotons -->
+	<b>Oxydes d'azote</b> {{emissions[1]}}<br>
+	<b>COV non méthanique</b> {{emissions[2]}}<br>
+	<b>Particules</b> {{emissions[3]}}</p>
+	</div>
+	<div #noEmissions>
+	<p>Données non disponibles</p>
+	</div>
+
+	<h2>Répartition des vols par faisceau ({{lastYear}})</h2>
+
+	<canvas id="flightsPerType" width="200" height="200"></canvas>
+
+	<h2>Top 10 destinations ({{lastYear}})</h2>
+
+	<table class="table table-striped table-sm">
+	  <thead>
+		<tr>
+		  <th scope="col">Destinations</th>
+		  <th scope="col">Passagers</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr *ngFor="let dest of top10">
+		  <td>{{dest[0]}}</td>
+		  <td>{{dest[1]}}</td>
+		</tr>
+	  </tbody>
+	</table>
+
+	<h2>Evolution du nombre de passagers 1990-{{lastYear}}</h2>
+
+	<div style="width: 90%;">
+		<canvas id="passengersPerYear" height="250"></canvas>
+	</div>
+
+	<a class="btn" role="button" routerLink="/details/{{airport.oaci}}">
+	  Plus d'infos
+	</a>
 </div>
-<div #noEmissions>
-<p>Données non disponibles</p>
+<div #noAirport>
+<p>Cliquez sur la carte pour sélectionner un aéroport.</p>
 </div>
-
-<h2>Répartition des vols par faisceau ({{lastYear}})</h2>
-
-<canvas id="flightsPerType" width="200" height="200"></canvas>
-
-<h2>Top 10 destinations ({{lastYear}})</h2>
-
-<table class="table table-striped table-sm">
-  <thead>
-    <tr>
-      <th scope="col">Destinations</th>
-      <th scope="col">Passagers</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let dest of top10">
-      <td>{{dest[0]}}</td>
-      <td>{{dest[1]}}</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2>Evolution du nombre de passagers 1990-{{lastYear}}</h2>
-
-<div style="width: 90%;">
-	<canvas id="passengersPerYear" height="250"></canvas>
-</div>
-
-<a class="btn" role="button" routerLink="/details/{{airport.oaci}}">
-  Plus d'infos
-</a>
