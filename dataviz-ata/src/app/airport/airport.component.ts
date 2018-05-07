@@ -17,10 +17,11 @@ export class AirportComponent implements OnInit {
   constructor(private airportList: AirportListService) { }
 
   ngOnInit() {
-    this.mymap = L.map('mapid').setView([46.449, 2.210], 6);
+    this.mymap = L.map('mapid').setView([46.449, 2.210], 6); 
+	// coordinates found on openstreetmap start page for full view of France
 
 	L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-      attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+      attribution: 'Donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
       minZoom: 1,
       maxZoom: 20
     }).addTo(this.mymap);

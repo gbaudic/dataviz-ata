@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 @Injectable()
 export class TrafficService {
   hauls = ['LC', 'MC', 'CC'];
-  trafficData = [];
+  trafficData = []; // todo: replace or import external file with data
   flightsData = [];
   top10Data = [];
 

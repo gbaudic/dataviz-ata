@@ -28,7 +28,7 @@ export class EmissionsService {
 	return of(result);
   }
   
-  // Unused, may have been useful to 
+  // Unused, may have been useful to find correct line in array
   findAirport(record: any, oaci: string): boolean {
     return record.name === oaci;
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { TrafficService } from 'app/traffic.service';
+import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
 import { AirportListService } from 'app/airport-list.service';
 import Chart from 'chart.js';
@@ -24,21 +24,43 @@ export class AirportDetailsComponent implements OnInit {
 
   ngOnInit() {
   
-    this.passengersChart = new Chart('passengers',
-	{
-    type: 'bar',
-    data: data,
-    options: {
-        scales: {
-            xAxes: [{
-                stacked: true
-            }],
-            yAxes: [{
-                stacked: true
-            }]
-        }
-    }
-    });
+	  this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
+		data => {
+		this.passengersChart = new Chart('passengers',
+		{
+		type: 'bar',
+		data: data,
+		options: {
+			scales: {
+				xAxes: [{
+					stacked: true
+				}],
+				yAxes: [{
+					stacked: true
+				}]
+			}
+		}
+		})
+	  });
+	  
+	  this.traffic.getFlights(this.oaci, this.yearStart, this.yearEnd).subscribe(
+		data => {
+		this.flightsChart = new Chart('flights',
+		{
+		type: 'bar',
+		data: data,
+		options: {
+			scales: {
+				xAxes: [{
+					stacked: true
+				}],
+				yAxes: [{
+					stacked: true
+				}]
+			}
+		}
+		})
+	  });
   }
   
   ngOnChanges(changes: SimpleChanges) {
