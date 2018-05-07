@@ -11,7 +11,7 @@ airports <- read.csv2("../csv/DataViz_APT.csv",header=TRUE);
 airports_FR <- airports[airports$APT_ISO2 == "FR" && airports$APT_IATA != "_nd"];
 names(airports_FR) <- c("oaci","iata","name","country","country_name", "zone", "haul", "lat", "long");
 airports_FR$nb_destinations <- 0;
-# Remove - from airporks names
+# Remove - from airporks names so we can use Angular titlecase pipe
 airports_FR$name <- gsub("-"," ",airports_FR$name,fixed=TRUE);
 
 airports_FR_codes <- unique(airports_FR["oaci"]);
@@ -68,8 +68,10 @@ for(i in c(1990:year_max)) {
 	  my_destinations <- current_traffic[current_traffic$DEP == airport];
 	  my_destinations <- current_traffic[order(-my_destinations$PAX_FS), ];
 	  for(j in c(1:10) ) {
+	  if(j <= length(my_destinations)) { # Because some airports may have less than 10 destinations... 
 	    top10[paste0("dest_",j)][top10$name == airport] = airports_FR$name[airports_FR$oaci == my_destinations$ARR[j]];
 		top10[paste0("pax_",j)][top10$name == airport] = my_destinations$PAX_FS[j];
+		}
 	  }
     }
   }
@@ -79,6 +81,19 @@ for(i in c(1990:year_max)) {
 
 
 ## Final step: export files
-# tojson(airports_FR[,c("oaci", "iata", "name", "lat", "long")]);
+print(tojson(airports_FR));
 
-# todo: top10, traffics, emissions
+print(tojson(top10));
+print(tojson(traffics));
+print(tojson(emissions));
+print(tojson(flights));
+
+## Utility functions from Rosetta Code, covered by GNU FDL
+
+dms_to_rad <- function(d, m, s) (d + m / 60 + s / 3600) * pi / 180
+ 
+great_circle_distance <- function(lat1, long1, lat2, long2) {
+   a <- sin(0.5 * (lat2 - lat1))
+   b <- sin(0.5 * (long2 - long1))
+   12742 * asin(sqrt(a * a + cos(lat1) * cos(lat2) * b * b))
+}
