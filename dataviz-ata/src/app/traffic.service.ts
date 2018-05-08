@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { top10Data } from 'app/data/top10';
+import { flightsData } from 'app/data/flights';
+import { passengersData } from 'app/data/passengers';
+
 @Injectable()
 export class TrafficService {
   hauls = ['LC', 'MC', 'CC'];
-  trafficData = []; // todo: replace or import external file with data
-  flightsData = [];
-  top10Data = [];
 
   constructor() { }
   
   getTop10(oaci: string): Observable<Array<[string, number]>> {
-    for(let ap of this.top10Data) {
+    for(let ap of top10Data) {
 	  if(ap.name === oaci) {
 	    let result : Array<[string, number]> = [];
 		for(let i = 1 ; i <= 10 ; i++) {
@@ -28,7 +29,7 @@ export class TrafficService {
   getTraffic(oaci: string, yearStart: number, yearEnd: number) : Observable<BarSeries[]> {
     let result: BarSeries[] = [];
 	
-	for(let ap of this.trafficData) {
+	for(let ap of passengersData) {
 	  if(ap.name === oaci) {
 	    for(let h of this.hauls) {
 		  let data: number[] = [];
@@ -47,7 +48,7 @@ export class TrafficService {
   getFlights(oaci: string, yearStart: number, yearEnd: number) : Observable<BarSeries[]> {
     let result: BarSeries[] = [];
 	
-	for(let ap of this.flightsData) {
+	for(let ap of flightsData) {
 	  if(ap.name === oaci) {
 	    for(let h of this.hauls) {
 		  let data: number[] = [];
