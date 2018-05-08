@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
 import { AirportListService } from 'app/airport-list.service';
@@ -14,16 +15,18 @@ export class AirportDetailsComponent implements OnInit {
   @Input() oaci: string;
   @Input() yearEnd = 2016;
   @Input() showDatePicker = true;
-  
+
   passengersChart: any;
   flightsChart: any;
 
   constructor(private traffic: TrafficService,
               private emissions: EmissionsService,
-			  private airports: AirportListService) { }
+			  private airports: AirportListService,
+			  private route: ActivatedRoute) { }
 
   ngOnInit() {
-  
+    this.oaci = this.route.snapshot.paramMap.get('oaci');
+
 	  this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
 		data => {
 		this.passengersChart = new Chart('passengers',
@@ -42,7 +45,7 @@ export class AirportDetailsComponent implements OnInit {
 		}
 		})
 	  });
-	  
+
 	  this.traffic.getFlights(this.oaci, this.yearStart, this.yearEnd).subscribe(
 		data => {
 		this.flightsChart = new Chart('flights',
@@ -62,9 +65,9 @@ export class AirportDetailsComponent implements OnInit {
 		})
 	  });
   }
-  
+
   ngOnChanges(changes: SimpleChanges) {
-  
+
   }
 
 }
