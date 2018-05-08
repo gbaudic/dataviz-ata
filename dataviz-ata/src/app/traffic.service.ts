@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { top10Data } from 'app/data/top10';
 import { flightsData } from 'app/data/flights';
@@ -21,7 +21,7 @@ export class TrafficService {
 		  }
 		}
 		
-		return of(result);
+		return Observable.of(result);
 	  }
 	}
   }
@@ -42,7 +42,7 @@ export class TrafficService {
 	  }
 	}
 	
-	return of(result);
+	return Observable.of(result);
   }
 
   getFlights(oaci: string, yearStart: number, yearEnd: number) : Observable<BarSeries[]> {
@@ -61,7 +61,7 @@ export class TrafficService {
 	  }
 	}
 	
-	return of(result);
+	return Observable.of(result);
   }
 }
 

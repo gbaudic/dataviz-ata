@@ -1,8 +1,8 @@
 
-<div *ngIf="airport.oaci; else #noAirport">
+<div *ngIf="oaci; else noAirport">
 	<h1>{{airport.name | titlecase}} ({{airport.oaci}})</h1>
 
-	<p><b>Passagers en {{lastYear}}<b> {{lastPassengers}}</p>
+	<p><b>Passagers en {{lastYear}}</b> {{lastPassengers}}</p>
 	<p><b>Destinations desservies en {{lastYear}}</b> {{airport.nb_destinations}}</p>
 
 	<h2>Emissions polluantes ({{lastYear}}) en tonnes</h2>

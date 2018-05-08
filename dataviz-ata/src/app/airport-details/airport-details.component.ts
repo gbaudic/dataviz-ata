@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';

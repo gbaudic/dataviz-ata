@@ -9,6 +9,10 @@ import { AirportDetailsComponent } from './airport-details/airport-details.compo
 import { AirportDescriptionComponent } from './airport-description/airport-description.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { AirportListService } from './airport-list.service';
+import { TrafficService } from './traffic.service';
+import { EmissionsService } from './emissions.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,9 +23,14 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+	FormsModule
   ],
-  providers: [],
+  providers: [
+    AirportListService,
+	TrafficService,
+	EmissionsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

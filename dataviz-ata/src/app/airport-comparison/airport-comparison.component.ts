@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AirportListService } from 'app/airport-list.service';
-import { AirportDescription } from 'app/app.component';
+import { AirportDescription } from 'app/airport/airport.component';
+import { AirportDetailsComponent } from 'app/airport-details/airport-details.component';
 
 @Component({
   selector: 'app-airport-comparison',
@@ -17,7 +18,8 @@ export class AirportComparisonComponent implements OnInit {
   constructor(private listServ: AirportListService) { }
 
   ngOnInit() {
-  // load airport list from service to populate selects
+    // load airport list from service to populate selects
+    this.listServ.getAirportList().subscribe(res => this.airports = res);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { emissionData } from 'app/data/emissions';
 
@@ -25,11 +25,11 @@ export class EmissionsService {
 		
 		if(result[0] > 0) {
 		  // If an airport has 0 as CO2 emissions, it is likely that we simply had no data for it
-		  return of(result);
+		  return Observable.of(result);
 		}
 	  }
 	}
-	return of(finalResult);
+	return Observable.of(finalResult);
   }
   
   // Unused, may have been useful to find correct line in array

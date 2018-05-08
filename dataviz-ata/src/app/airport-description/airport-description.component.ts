@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DescriptionService } from 'app/description.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { AirportListService } from 'app/airport-list.service';
 import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
-import { AirportDescription } from 'app/airport-component/airport.component';
+import { AirportDescription } from 'app/airport/airport.component';
 import Chart from 'chart.js';
 
 @Component({
@@ -22,17 +22,18 @@ export class AirportDescriptionComponent implements OnInit {
   flightsPerTypeChart: any;
   passengersPerYearChart: any;
 
-  constructor(private description: DescriptionService,
+  constructor(private description: AirportListService,
               private traffic: TrafficService,
-			  private emissions: EmissionsService
+			  private emissionsSrv: EmissionsService
              ) { }
 
   ngOnInit() {
+  if(this.oaci) {
     // fetch description
-	this.description.getDescription(this.oaci).subscribe(desc => { this.airport = desc; });
+	this.description.getAirportDescription(this.oaci).subscribe(desc => { this.airport = desc; });
 	
     // Fetch emissions
-	this.emissions.getEmissions(this.oaci).subscribe(emi => { 
+	this.emissionsSrv.getEmissions(this.oaci).subscribe(emi => { 
 	   this.emissions = emi; 
 	});
 	
@@ -60,8 +61,8 @@ export class AirportDescriptionComponent implements OnInit {
 	'2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016'],
 				datasets: [{
 					label: 'My First dataset',
-					backgroundColor: window.chartColors.blue,
-					borderColor: window.chartColors.blue,
+					backgroundColor: 'rgb(54, 162, 235)',
+					borderColor: 'rgb(54, 162, 235)',
 					data: sums,
 					fill: false,
 				}]
@@ -108,9 +109,9 @@ export class AirportDescriptionComponent implements OnInit {
 				datasets: [{
 					data: values,
 					backgroundColor: [
-						window.chartColors.yellow,
-						window.chartColors.green,
-						window.chartColors.blue,
+						'rgb(255, 205, 86)',
+	                    'rgb(75, 192, 192)',
+						'rgb(54, 162, 235)'
 					],
 					label: 'Dataset 1'
 				}],
@@ -129,6 +130,7 @@ export class AirportDescriptionComponent implements OnInit {
 		}
 		);
 	});
+	}
   }
 
 }

@@ -27,9 +27,9 @@ export class AirportComponent implements OnInit {
     }).addTo(this.mymap);
   
     // get list, create markers
-	this.airportList.getList().subscribe(res => {
+	this.airportList.getAirportList().subscribe(res => {
 	  for (let ap of res) {
-	    L.marker([ap.lat, ap.long],{title: `${ap.name.toTitleCase()} (${ap.oaci})`}).addTo(this.mymap)
+	    L.marker([ap.lat, ap.long],{title: `${ap.name} (${ap.oaci})`}).addTo(this.mymap)
 		  .on('click',() => { this.oaci = ap.oaci; });
 	  }
 	});
