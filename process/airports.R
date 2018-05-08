@@ -4,17 +4,20 @@ year_max <- 2016;
 hauls <- c("CC","MC","LC");
 pollutants <- c("CO2","NOX","COVNM","TSP");
 
+setwd("/home/loial/code/dataviz-ata/process");
+
 # Import dataset
 
-airports <- read.csv2("../csv/DataViz_APT.csv",header=TRUE);
+airports <- read.csv2("../csv/DataViz_APT.csv",header=TRUE,na.strings="", stringsAsFactors=FALSE);
 
-airports_FR <- airports[airports$APT_ISO2 == "FR" && airports$APT_IATA != "_nd"];
+airports_FR <- airports[airports$APT_ISO2 == "FR" & airports$APT_IATA != "_nd", ];
+airports_FR<- airports_FR[!is.na(airports_FR$APT_ISO2), ];
 names(airports_FR) <- c("oaci","iata","name","country","country_name", "zone", "haul", "lat", "long");
 airports_FR$nb_destinations <- 0;
 # Remove - from airporks names so we can use Angular titlecase pipe
 airports_FR$name <- gsub("-"," ",airports_FR$name,fixed=TRUE);
 
-airports_FR_codes <- unique(airports_FR["oaci"]);
+airports_FR_codes <- unique(airports_FR$oaci, na.rm=TRUE);
 
 # Prepare result dataframes
 traffics <- data.frame(name=airports_FR_codes);
@@ -22,24 +25,26 @@ flights <- data.frame(name=airports_FR_codes);
 emissions <- data.frame(name=airports_FR_codes);
 for(haul in hauls) {
   for(p in pollutants) {
-    emissions[paste0("CO2_",haul)] <- 0;
+    emissions[paste0(p,"_",haul)] <- 0;
   }
 }
 
 # Pollution: sum by airport, by haul
-  current_poll <- read.csv2(paste0("../csv/DataViz_EMI_",year_max,".csv"),header=TRUE);
-  for(airport in airports_FR_codes) {
+current_poll <- read.csv2(paste0("../csv/DataViz_EMI_", year_max, ".csv"),header=TRUE);
+for(airport in airports_FR_codes) {
     for(p in pollutants) {
 	  for(h in hauls) {
-	  emissions[paste0(p,"_",h)][emissions$name == airport] <- sum(current_poll[p][current_poll$APT == airport && current_poll$FSC == h], na.rm=TRUE);
-	  
+        emissions[emissions$name == airport, paste0(p,"_",h)] <- sum(current_poll[current_poll$APT == airport & current_poll$FSC == h, p], na.rm=TRUE);  
 	  }
 	}
-  }
+}
   
 top10 <- data.frame(name = airports_FR_codes, dest_1 = '', pax_1 = 0, dest_2 = '', pax_2 = 0,
            dest_3 = '', pax_3 = 0, dest_4 = '', pax_4 = 0, dest_5 = '', pax_5 = 0, dest_6 = '', pax_6 = 0,
-		   dest_7 = '', pax_7 = 0, dest_8 = '', pax_8 = 0,dest_9 = '', pax_9 = 0, dest_10 = '', pax_10 = 0); 
+		   dest_7 = '', pax_7 = 0, dest_8 = '', pax_8 = 0,dest_9 = '', pax_9 = 0, dest_10 = '', pax_10 = 0, stringsAsFactors=FALSE); 
+for(i in c(1:10)) {
+ levels(top10[paste0("dest_",i)]) <- levels(airports$APT_NOM);
+}
 
 for(i in c(1990:year_max)) {
 # Traffic: get 10 most popular airports by airport by number of passengers
@@ -54,39 +59,45 @@ for(i in c(1990:year_max)) {
   current_traffic <- read.csv2(paste0("../csv/DataViz_TRA_",i,".csv"),header = TRUE);
   for(airport in airports_FR_codes) {
 	  for(haul in hauls) {
-	    traffics[paste0(haul,"_",i)][traffics$name == airport] <- sum(current_traffic$PAX_FS[current_traffic$DEP == airport && current_traffic$FSC == haul], na.rm = TRUE);
-		flights[paste0(haul,"_",i)][flights$name == airport] <- sum(current_traffic$NVOLS[current_traffic$DEP == airport && current_traffic$FSC == haul], na.rm = TRUE);
+	    traffics[traffics$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "PAX_FS"], na.rm = TRUE);
+		flights[flights$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "NVOLS"], na.rm = TRUE);
 	  }
   
   
     # 2016: special treatment
 	if(i == year_max) {
 	# Count number of destinations
-      airports_FR$nb_destinations[airports_FR$oaci == airport] <- length(unique(current_traffic$ARR[current_traffic$DEP == airport]));
+	  arrival_airports <- unique(current_traffic[current_traffic$DEP == airport, "ARR"], na.rm = TRUE);
+      airports_FR[airports_FR$oaci == airport, "nb_destinations"] <- length(arrival_airports);
 	  
 	  # Make a top10
-	  my_destinations <- current_traffic[current_traffic$DEP == airport];
-	  my_destinations <- current_traffic[order(-my_destinations$PAX_FS), ];
-	  for(j in c(1:10) ) {
-	  if(j <= length(my_destinations)) { # Because some airports may have less than 10 destinations... 
-	    top10[paste0("dest_",j)][top10$name == airport] = airports_FR$name[airports_FR$oaci == my_destinations$ARR[j]];
-		top10[paste0("pax_",j)][top10$name == airport] = my_destinations$PAX_FS[j];
+	   if(length(arrival_airports) > 0) {
+	   top10_df <- data.frame(name = arrival_airports);
+	   top10_df$pax <- 0;
+	   for(arr in arrival_airports) {
+	     top10_df[top10_df$name == arr, "pax"] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$ARR == arr, "PAX_FS"], na.rm = TRUE);
+	   }
+	   top10_df <- top10_df[order(-top10_df$pax), ];
+	   for(j in c(1:10) ) {
+	   if(j <= nrow(top10_df)) { # Because some airports may have less than 10 destinations... 
+	    top10[top10$name == airport, paste0("dest_",j)] = airports[as.character(airports$APT_OACI) == as.character(top10_df[j,"name"]), "APT_NOM"];
+        top10[top10$name == airport, paste0("pax_",j)] = top10_df[j,"pax"];
 		}
 	  }
     }
-  }
-  
+    }
+  }  
   
 }
 
 
 ## Final step: export files
-writeLines(tojson(airports_FR),"airports.ts");
+writeLines(toJSON(airports_FR),"airports.ts");
 
-writeLines(tojson(top10),"top10.ts");
-writeLines(tojson(traffics),"passengers.ts");
-writeLines(tojson(emissions),"emissions.ts");
-writeLines(tojson(flights),"flights.ts");
+writeLines(toJSON(top10),"top10.ts");
+writeLines(toJSON(traffics),"passengers.ts");
+writeLines(toJSON(emissions),"emissions.ts");
+writeLines(toJSON(flights),"flights.ts");
 
 ## Utility functions from Rosetta Code, covered by GNU FDL
 
