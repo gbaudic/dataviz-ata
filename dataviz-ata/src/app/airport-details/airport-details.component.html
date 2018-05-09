@@ -1,11 +1,15 @@
-<div *ngIf="showDatePicker">
-<!--copypasta from comparison view-->
+<div class="container" style="margin-top: 54px;">
+	<div *ngIf="showDatePicker">
+	<!--copypasta from comparison view-->
+	</div>
+
+	<h2>Evolution du nombre de passagers par faisceau</h2>
+	<div>
+		<canvas id="passengers" height="300" width="600"></canvas>
+	</div>
+
+	<h2>Evolution du nombre de vols par faisceau</h2>
+	<div>
+		<canvas id="flights" height="300" width="600"></canvas>
+	</div>
 </div>
-
-<h2>Evolution du nombre de passagers par faisceau</h2>
-
-<canvas id="passengers" height="300" width="600"></canvas>
-
-<h2>Evolution du nombre de vols par faisceau</h2>
-
-<canvas id="flights" height="300" width="600"></canvas>

@@ -18,9 +18,9 @@ export class EmissionsService {
 		result.fill(0);
 			
 		for(let i = 0 ; i < this.pollutants.length ; i++) {
-		  result[i] = emissionData[`${this.pollutants[i]}_LC`]
-		            + emissionData[`${this.pollutants[i]}_MC`]
-					+ emissionData[`${this.pollutants[i]}_CC`];
+		  result[i] = ap[`${this.pollutants[i]}_LC`]
+		            + ap[`${this.pollutants[i]}_MC`]
+					+ ap[`${this.pollutants[i]}_CC`];
 		}
 		
 		if(result[0] > 0) {

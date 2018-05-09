@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
 import { AirportListService } from 'app/airport-list.service';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-airport-details',

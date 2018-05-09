@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule }    from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr'
 
 import { AppComponent } from './app.component';
 import { AirportComponent } from './airport/airport.component';
@@ -29,8 +31,12 @@ import { EmissionsService } from './emissions.service';
   providers: [
     AirportListService,
 	TrafficService,
-	EmissionsService
+	EmissionsService,
+	{provide: LOCALE_ID, useValue:'fr'}
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+registerLocaleData(localeFr, 'fr');
+

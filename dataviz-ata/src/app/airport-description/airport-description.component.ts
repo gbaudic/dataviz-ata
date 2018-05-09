@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AirportListService } from 'app/airport-list.service';
 import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
 import { AirportDescription } from 'app/airport/airport.component';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-airport-description',
@@ -30,7 +30,9 @@ export class AirportDescriptionComponent implements OnInit {
   ngOnInit() {
   if(this.oaci) {
     // fetch description
-	this.description.getAirportDescription(this.oaci).subscribe(desc => { this.airport = desc; });
+	this.description.getAirportDescription(this.oaci).subscribe(desc => { 
+		this.airport = desc; 
+	});
 	
     // Fetch emissions
 	this.emissionsSrv.getEmissions(this.oaci).subscribe(emi => { 
@@ -98,38 +100,45 @@ export class AirportDescriptionComponent implements OnInit {
 	  );
 	});
 	
-	this.traffic.getFlights(this.oaci, this.lastYear, this.lastYear).subscribe(data => {
-		let titles = [data[0].label, data[1].label, data[2].label];
-		let values = [data[0].data[0], data[1].data[0], data[2].data[0]];
-		
-		this.flightsPerTypeChart = new Chart('flightsPerType',
-		{
-			type: 'doughnut',
-			data: {
-				datasets: [{
-					data: values,
-					backgroundColor: [
-						'rgb(255, 205, 86)',
-	                    'rgb(75, 192, 192)',
-						'rgb(54, 162, 235)'
-					],
-					label: 'Dataset 1'
-				}],
-				labels: titles
-			},
-			options: {
-				responsive: true,
-				legend: {
-					position: 'top',
+		this.traffic.getFlights(this.oaci, this.lastYear, this.lastYear).subscribe(data => {
+			let titles = [data[0].label, data[1].label, data[2].label];
+			let values = [data[0].data[0], data[1].data[0], data[2].data[0]];
+			
+			this.flightsPerTypeChart = new Chart('flightsPerType',
+			{
+				type: 'doughnut',
+				data: {
+					datasets: [{
+						data: values,
+						backgroundColor: [
+							'rgb(255, 205, 86)',
+							'rgb(75, 192, 192)',
+							'rgb(54, 162, 235)'
+						],
+						label: 'Dataset 1'
+					}],
+					labels: titles
 				},
-				animation: {
-					animateScale: true,
-					animateRotate: true
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					animation: {
+						animateScale: true,
+						animateRotate: true
+					}
 				}
 			}
-		}
-		);
-	});
+			);
+		});
+	}
+  }
+  
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.oaci) {
+	  this.oaci = changes.oaci.currentValue;
+	  this.ngOnInit();
 	}
   }
 

@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/map', pathMatch: 'full' },
   { path: 'map', component: AirportComponent },
   { path: 'details/:oaci', component: AirportDetailsComponent },
-  { path: 'compare', component: AirportComparisonComponent }
+  { path: 'comparaison', component: AirportComparisonComponent }
 ];
 
 @NgModule({
