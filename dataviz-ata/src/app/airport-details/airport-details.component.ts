@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
@@ -15,6 +15,9 @@ export class AirportDetailsComponent implements OnInit {
   @Input() oaci: string;
   @Input() yearEnd = 2016;
   @Input() showDatePicker = true;
+  
+  @ViewChild('passengersCanvas') canvas1;
+  @ViewChild('flightsCanvas') canvas2;
 
   passengersChart: any;
   flightsChart: any;
@@ -35,7 +38,7 @@ export class AirportDetailsComponent implements OnInit {
   drawGraphs(): void {
     this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
 		data => {
-		this.passengersChart = new Chart('passengers',
+		this.passengersChart = new Chart(this.canvas1.nativeElement,
 		{
 		type: 'bar',
 		data: {labels: this.makeXAxis(), datasets: data},
@@ -54,7 +57,7 @@ export class AirportDetailsComponent implements OnInit {
 
 	  this.traffic.getFlights(this.oaci, this.yearStart, this.yearEnd).subscribe(
 		data => {
-		this.flightsChart = new Chart('flights',
+		this.flightsChart = new Chart(this.canvas2.nativeElement,
 		{
 		type: 'bar',
 		data: {labels: this.makeXAxis(), datasets: data},

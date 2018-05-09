@@ -8,9 +8,9 @@
 	<h4>Emissions polluantes ({{lastYear}}) en tonnes</h4>
 
 	<div *ngIf="emissions.length > 0; else noEmissions">
-	<p><b>CO2</b> {{emissions[0] * 1000 | number:'1.0-3':'fr' }}<br><!-- kilotons -->
+	<p><b><abbr title="Dioxyde de carbone">CO2</abbr></b> {{emissions[0] * 1000 | number:'1.0-3':'fr' }}<br><!-- kilotons -->
 	<b>Oxydes d'azote</b> {{emissions[1] | number:'1.0-3':'fr' }}<br>
-	<b>COV non méthanique</b> {{emissions[2] | number:'1.0-3':'fr' }}<br>
+	<b><abbr title="Composés Organiques Volatils">COV</abbr> non méthanique</b> {{emissions[2] | number:'1.0-3':'fr' }}<br>
 	<b>Particules</b> {{emissions[3] | number:'1.0-3':'fr' }}</p>
 	</div>
 	<ng-template #noEmissions>

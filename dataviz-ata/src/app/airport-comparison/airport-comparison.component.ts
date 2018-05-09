@@ -9,8 +9,8 @@ import { AirportDetailsComponent } from 'app/airport-details/airport-details.com
   styleUrls: ['./airport-comparison.component.css']
 })
 export class AirportComparisonComponent implements OnInit {
-  startYear: number;
-  endYear: number;
+  startYear: number = 1990;
+  endYear: number = 2016;
   airport1: string;
   airport2: string;
   airports: AirportDescription[] = [];

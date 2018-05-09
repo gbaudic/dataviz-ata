@@ -1,18 +1,18 @@
 <div class="container" style="margin-top: 54px;">
 	<div *ngIf="showDatePicker">
 	    De
-		<input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990">
+		<input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990" (ngModelChange)="drawGraphs()">
 		à
-		<input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2016">
+		<input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2016" (ngModelChange)="drawGraphs()">
 	</div>
 
-	<h2>Evolution du nombre de passagers par faisceau</h2>
+	<h2>Nombre de passagers par faisceau</h2>
 	<div>
-		<canvas id="passengers" height="300" width="600"></canvas>
+		<canvas id="passengers" height="300" width="600" #passengersCanvas></canvas>
 	</div>
 
-	<h2>Evolution du nombre de vols par faisceau</h2>
+	<h2>Nombre de vols par faisceau</h2>
 	<div>
-		<canvas id="flights" height="300" width="600"></canvas>
+		<canvas id="flights" height="300" width="600" #flightsCanvas></canvas>
 	</div>
 </div>

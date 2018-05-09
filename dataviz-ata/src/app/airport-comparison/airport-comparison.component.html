@@ -1,6 +1,6 @@
 <div class="container">
-	<div class="row">
-		<div class="col">
+	<div class="row" style="padding-bottom: 10px;">
+		<div class="col text-center">
 		De
 		<input type="number" id="startYear" [(ngModel)]="startYear" name="startYear" value="1990">
 		à
@@ -9,22 +9,24 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col">
+		<div class="col-6 text-center">
+			Aéroport 1
 		  <select id="airport1" [(ngModel)]="airport1" name="airport1">
 		    <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}}</option>
 		  </select>
 		</div>
-	    <div class="col">
+	    <div class="col-6 text-center">
+		Aéroport 2
 		  <select id="airport2" [(ngModel)]="airport2" name="airport2">
 		    <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}}</option>
 		  </select>
 		</div>
 	</div>
 	<div class="row">
-	    <div class="col">
+	    <div class="col-6">
 		  <app-airport-details [yearStart]="startYear" [yearEnd]="endYear" [showDatePicker]="false" [oaci]="airport1" #ap1></app-airport-details>
 		</div>
-		<div class="col">
+		<div class="col-6">
 		  <app-airport-details [yearStart]="startYear" [yearEnd]="endYear" [showDatePicker]="false" [oaci]="airport2" #ap2></app-airport-details>
 		</div>
 	</div>
