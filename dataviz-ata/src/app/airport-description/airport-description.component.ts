@@ -32,17 +32,21 @@ export class AirportDescriptionComponent implements OnInit {
     // fetch description
 	this.description.getAirportDescription(this.oaci).subscribe(desc => { 
 		this.airport = desc; 
+		this.drawGraphs();
+		
+		// Fetch emissions
+		this.emissionsSrv.getEmissions(this.oaci).subscribe(emi => { 
+		   this.emissions = emi; 
+		});
+		
+		// Fetch top10
+		this.traffic.getTop10(this.oaci).subscribe(res => { this.top10 = res; });
 	});
-	
-    // Fetch emissions
-	this.emissionsSrv.getEmissions(this.oaci).subscribe(emi => { 
-	   this.emissions = emi; 
-	});
-	
-	// Fetch top10
-	this.traffic.getTop10(this.oaci).subscribe(res => { this.top10 = res; });
-	
-	// Fetch nb passengers and sum -> graphics
+	}
+  }
+  
+  drawGraphs(): void {
+    	// Fetch nb passengers and sum -> graphics
 	this.traffic.getTraffic(this.oaci, 1990, this.lastYear).subscribe(data => {
 	  // Compute sums
 	  let sums: number[] = [];
@@ -62,7 +66,6 @@ export class AirportDescriptionComponent implements OnInit {
 				labels: ['1990','1991','1992','1993','1994','1995','1996','1997','1998','1999','2000','2001','2002','2003','2004',
 	'2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016'],
 				datasets: [{
-					label: 'My First dataset',
 					backgroundColor: 'rgb(54, 162, 235)',
 					borderColor: 'rgb(54, 162, 235)',
 					data: sums,
@@ -75,6 +78,9 @@ export class AirportDescriptionComponent implements OnInit {
 					mode: 'index',
 					intersect: false,
 				},
+				legend: {
+				  display: false
+				}, 
 				hover: {
 					mode: 'nearest',
 					intersect: true
@@ -132,7 +138,6 @@ export class AirportDescriptionComponent implements OnInit {
 			}
 			);
 		});
-	}
   }
   
   ngOnChanges(changes: SimpleChanges) {

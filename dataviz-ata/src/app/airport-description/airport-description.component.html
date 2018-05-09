@@ -1,5 +1,5 @@
 
-<div *ngIf="airport; else noAirport">
+<div *ngIf="oaci; else noAirport">
 	<h3>{{airport.name | titlecase}} ({{airport.oaci}})</h3>
 
 	<p><b>Passagers en {{lastYear}}</b> {{lastPassengers | number }}<br>
@@ -19,7 +19,7 @@
 
 	<h4>Vols par faisceau ({{lastYear}})</h4>
 
-	<canvas id="flightsPerType" width="200" height="200"></canvas>
+	<canvas id="flightsPerType" width="150" height="150"></canvas>
 
 	<h4>Top 10 destinations ({{lastYear}})</h4>
 
@@ -49,9 +49,11 @@
 		<canvas id="passengersPerYear" height="250"></canvas>
 	</div>
 
+	<p class="text-center">
 	<a class="btn btn-outline-primary" role="button" routerLink="/details/{{airport.oaci}}">
 	  Plus d'infos
 	</a>
+	</p>
 </div>
 <ng-template #noAirport>
 <p>Cliquez sur la carte pour sélectionner un aéroport.</p>

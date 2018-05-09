@@ -32,7 +32,7 @@ export class AirportDetailsComponent implements OnInit {
 		this.passengersChart = new Chart('passengers',
 		{
 		type: 'bar',
-		data: data,
+		data: {labels: this.makeXAxis(), datasets: data},
 		options: {
 			scales: {
 				xAxes: [{
@@ -51,7 +51,7 @@ export class AirportDetailsComponent implements OnInit {
 		this.flightsChart = new Chart('flights',
 		{
 		type: 'bar',
-		data: data,
+		data: {labels: this.makeXAxis(), datasets: data},
 		options: {
 			scales: {
 				xAxes: [{
@@ -64,6 +64,14 @@ export class AirportDetailsComponent implements OnInit {
 		}
 		})
 	  });
+  }
+  
+  makeXAxis() : string[] {
+    let result: string[] = [];
+	for(let i = this.yearStart ; i <= this.yearEnd ; i++) {
+	  result.push(i.toString());
+	}
+	return result;
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -8,6 +8,7 @@ import { passengersData } from 'app/data/passengers';
 @Injectable()
 export class TrafficService {
   hauls = ['LC', 'MC', 'CC'];
+  colors = ['rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)'];
 
   constructor() { }
   
@@ -37,7 +38,7 @@ export class TrafficService {
 		    data.push(ap[`${h}_${i}`]);
 		  }
 		  
-		  result.push({label: h, data: data});
+		  result.push({label: h, data: data, backgroundColor: this.colors[this.hauls.indexOf(h)]});
 		}
 	  }
 	}
@@ -56,7 +57,7 @@ export class TrafficService {
 		    data.push(ap[`${h}_${i}`]);
 		  }
 		  
-		  result.push({label: h, data: data});
+		  result.push({label: h, data: data, backgroundColor: this.colors[this.hauls.indexOf(h)]});
 		}
 	  }
 	}
@@ -68,5 +69,6 @@ export class TrafficService {
 /** Data class to help integration with chart.js library */
 export class BarSeries {
   label: string;
+  backgroundColor: string;
   data: number[];
 }
