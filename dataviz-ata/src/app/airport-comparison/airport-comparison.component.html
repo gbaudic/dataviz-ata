@@ -1,22 +1,21 @@
-<h1>Comparaison</h1>
 <div class="container">
 	<div class="row">
 		<div class="col">
 		De
-		<input type="number" id="startYear" [(ngModel)]="startYear" value="1980">
+		<input type="number" id="startYear" [(ngModel)]="startYear" name="startYear" value="1990">
 		à
-		<input type="number" id="endYear" [(ngModel)]="endYear" value="2016">
+		<input type="number" id="endYear" [(ngModel)]="endYear" name="endYear" value="2016">
 		
 		</div>
 	</div>
 	<div class="row">
 		<div class="col">
-		  <select id="airport1" [(ngModel)]="airport1">
+		  <select id="airport1" [(ngModel)]="airport1" name="airport1">
 		    <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}}</option>
 		  </select>
 		</div>
 	    <div class="col">
-		  <select id="airport2" [(ngModel)]="airport2">
+		  <select id="airport2" [(ngModel)]="airport2" name="airport2">
 		    <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}}</option>
 		  </select>
 		</div>

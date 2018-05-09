@@ -26,8 +26,14 @@ export class AirportDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.oaci = this.route.snapshot.paramMap.get('oaci');
-
-	  this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
+	
+	if(this.oaci) {
+	  this.drawGraphs();
+	} 
+  }
+  
+  drawGraphs(): void {
+    this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
 		data => {
 		this.passengersChart = new Chart('passengers',
 		{
@@ -75,7 +81,26 @@ export class AirportDetailsComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
+    let hasChanged = false;
+	
+    if(changes.yearStart) {
+	  this.yearStart = changes.yearStart.currentValue;
+	  hasChanged = true;
+	}
+	
+	if(changes.yearEnd) {
+	  this.yearEnd = changes.yearEnd.currentValue;
+	  hasChanged = true;
+	}
+	
+	if(changes.oaci) {
+	  this.oaci = changes.oaci.currentValue;
+	  hasChanged = true;
+	}
+	
+	if(hasChanged) {
+	  this.drawGraphs();
+	}
   }
 
 }

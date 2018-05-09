@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AirportListService } from './airport-list.service';
 import { TrafficService } from './traffic.service';
 import { EmissionsService } from './emissions.service';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { EmissionsService } from './emissions.service';
     AirportComponent,
     AirportComparisonComponent,
     AirportDetailsComponent,
-    AirportDescriptionComponent
+    AirportDescriptionComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

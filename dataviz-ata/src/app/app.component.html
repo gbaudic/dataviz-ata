@@ -8,14 +8,17 @@
 	  <li class="nav-item">
 		<a class="nav-link" routerLink="/comparaison">Comparaison</a>
 	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" routerLink="/about">A propos</a>
+	  </li>
 	</ul>
-	<div class="nav-item">
-	  <a class="nav-link" data-toggle="modal" data-target="#legalModal">A propos</a>
-	</div>
+	
   </div>
 </nav>
 
-<router-outlet style="margin-top: 60px;"></router-outlet>
+<div style="margin-top: 60px;">
+	<router-outlet></router-outlet>
+</div>
 
 <div class="modal" tabindex="-1" role="dialog" id="legalModal">
   <div class="modal-dialog" role="document">
