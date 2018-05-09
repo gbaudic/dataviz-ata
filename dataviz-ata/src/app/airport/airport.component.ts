@@ -25,11 +25,22 @@ export class AirportComponent implements OnInit {
       minZoom: 1,
       maxZoom: 20
     }).addTo(this.mymap);
+	
+	let greenIcon = L.icon({
+    iconUrl: 'assets/images/marker-icon.png',
+    shadowUrl: 'assets/images/marker-shadow.png',
+
+    iconSize:     [25, 41], // size of the icon
+    shadowSize:   [41, 41], // size of the shadow
+    iconAnchor:   [12, 41], // point of the icon which will correspond to marker's location
+    shadowAnchor: [12, 41],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+	});
   
     // get list, create markers
 	this.airportList.getAirportList().subscribe(res => {
 	  for (let ap of res) {
-	    L.marker([ap.lat, ap.long],{title: `${ap.name} (${ap.oaci})`}).addTo(this.mymap)
+	    L.marker([ap.lat, ap.long],{title: `${ap.name} (${ap.oaci})`, icon: greenIcon}).addTo(this.mymap)
 		  .on('click',() => { this.oaci = ap.oaci; });
 	  }
 	});

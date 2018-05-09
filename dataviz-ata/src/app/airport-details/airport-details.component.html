@@ -1,6 +1,9 @@
 <div class="container" style="margin-top: 54px;">
 	<div *ngIf="showDatePicker">
-	<!--copypasta from comparison view-->
+	    De
+		<input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990">
+		à
+		<input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2016">
 	</div>
 
 	<h2>Evolution du nombre de passagers par faisceau</h2>
