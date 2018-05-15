@@ -24,25 +24,25 @@ export class AirportDescriptionComponent implements OnInit {
 
   constructor(private description: AirportListService,
               private traffic: TrafficService,
-			  private emissionsSrv: EmissionsService
+			        private emissionsSrv: EmissionsService
              ) { }
 
   ngOnInit() {
-  if(this.oaci) {
-    // fetch description
-	this.description.getAirportDescription(this.oaci).subscribe(desc => { 
-		this.airport = desc; 
-		this.drawGraphs();
-		
-		// Fetch emissions
-		this.emissionsSrv.getEmissions(this.oaci).subscribe(emi => { 
-		   this.emissions = emi; 
-		});
-		
-		// Fetch top10
-		this.traffic.getTop10(this.oaci).subscribe(res => { this.top10 = res; });
-	});
-	}
+    if(this.oaci) {
+      // fetch description
+      this.description.getAirportDescription(this.oaci).subscribe(desc => { 
+        this.airport = desc; 
+        setTimeout(() => { this.drawGraphs(); }, 0);
+
+        // Fetch emissions
+        this.emissionsSrv.getEmissions(this.oaci).subscribe(emi => { 
+           this.emissions = emi; 
+        });
+
+        // Fetch top10
+        this.traffic.getTop10(this.oaci).subscribe(res => { this.top10 = res; });
+      });
+    }
   }
   
   drawGraphs(): void {
