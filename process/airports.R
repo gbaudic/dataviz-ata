@@ -1,6 +1,6 @@
 library("jsonlite")
 
-year_max <- 2016;
+year_max <- 2018;
 hauls <- c("CC","MC","LC");
 pollutants <- c("CO2","NOX","COVNM","TSP");
 
@@ -8,7 +8,7 @@ setwd("/home/loial/code/dataviz-ata/process");
 
 # Import dataset
 
-airports <- read.csv2("../csv/DataViz_APT.csv",header=TRUE,na.strings="", stringsAsFactors=FALSE);
+airports <- read.csv2("../csv/DataViz2_APT.csv",header=TRUE,na.strings="", stringsAsFactors=FALSE);
 
 airports_FR <- airports[airports$APT_ISO2 == "FR" & airports$APT_IATA != "_nd", ];
 airports_FR<- airports_FR[!is.na(airports_FR$APT_ISO2), ];
@@ -30,7 +30,7 @@ for(haul in hauls) {
 }
 
 # Pollution: sum by airport, by haul
-current_poll <- read.csv2(paste0("../csv/DataViz_EMI_", year_max, ".csv"),header=TRUE);
+current_poll <- read.csv2(paste0("../csv/DataViz2_EMI_", year_max, ".csv"),header=TRUE);
 for(airport in airports_FR_codes) {
     for(p in pollutants) {
 	  for(h in hauls) {
@@ -56,7 +56,7 @@ for(i in c(1990:year_max)) {
   flights[paste0("MC_",i)] <- 0;
   flights[paste0("CC_",i)] <- 0;
   
-  current_traffic <- read.csv2(paste0("../csv/DataViz_TRA_",i,".csv"),header = TRUE);
+  current_traffic <- read.csv2(paste0("../csv/DataViz2_TRA_",i,".csv"),header = TRUE);
   for(airport in airports_FR_codes) {
 	  for(haul in hauls) {
 	    traffics[traffics$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "PAX_FS"], na.rm = TRUE);
@@ -92,12 +92,12 @@ for(i in c(1990:year_max)) {
 
 
 ## Final step: export files
-writeLines(toJSON(airports_FR),"airports.ts");
+writeLines(toJSON(airports_FR),"airports2.ts");
 
-writeLines(toJSON(top10),"top10.ts");
-writeLines(toJSON(traffics),"passengers.ts");
-writeLines(toJSON(emissions),"emissions.ts");
-writeLines(toJSON(flights),"flights.ts");
+writeLines(toJSON(top10),"top102.ts");
+writeLines(toJSON(traffics),"passengers2.ts");
+writeLines(toJSON(emissions),"emissions2.ts");
+writeLines(toJSON(flights),"flights2.ts");
 
 ## Utility functions from Rosetta Code, covered by GNU FDL
 
