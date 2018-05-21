@@ -13,9 +13,9 @@ import { Chart } from 'chart.js';
 export class AirportDetailsComponent implements OnInit {
   @Input() yearStart = 1990;
   @Input() oaci: string;
-  @Input() yearEnd = 2016;
-  @Input() showDatePicker = true;
-  
+  @Input() yearEnd = 2018;
+  @Input() showDatePicker = true; // to allow the component to be used alone or not
+
   @ViewChild('passengersCanvas') canvas1;
   @ViewChild('flightsCanvas') canvas2;
 
@@ -24,17 +24,17 @@ export class AirportDetailsComponent implements OnInit {
 
   constructor(private traffic: TrafficService,
               private emissions: EmissionsService,
-			  private airports: AirportListService,
-			  private route: ActivatedRoute) { }
+			        private airports: AirportListService,
+			        private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.oaci = this.route.snapshot.paramMap.get('oaci');
-	
-	if(this.oaci) {
-	  this.drawGraphs();
-	} 
+
+	  if(this.oaci) {
+	    this.drawGraphs();
+	  }
   }
-  
+
   drawGraphs(): void {
     this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
 		data => {
@@ -74,7 +74,7 @@ export class AirportDetailsComponent implements OnInit {
 		})
 	  });
   }
-  
+
   makeXAxis() : string[] {
     let result: string[] = [];
 	for(let i = this.yearStart ; i <= this.yearEnd ; i++) {
@@ -85,22 +85,22 @@ export class AirportDetailsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     let hasChanged = false;
-	
+
     if(changes.yearStart) {
 	  this.yearStart = changes.yearStart.currentValue;
 	  hasChanged = true;
 	}
-	
+
 	if(changes.yearEnd) {
 	  this.yearEnd = changes.yearEnd.currentValue;
 	  hasChanged = true;
 	}
-	
+
 	if(changes.oaci) {
 	  this.oaci = changes.oaci.currentValue;
 	  hasChanged = true;
 	}
-	
+
 	if(hasChanged) {
 	  this.drawGraphs();
 	}

@@ -10,7 +10,7 @@ import { AirportDetailsComponent } from 'app/airport-details/airport-details.com
 })
 export class AirportComparisonComponent implements OnInit {
   startYear: number = 1990;
-  endYear: number = 2016;
+  endYear: number = 2018;
   airport1: string;
   airport2: string;
   airports: AirportDescription[] = [];
