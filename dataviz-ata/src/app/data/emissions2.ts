@@ -1,4 +1,4 @@
-export const emissions2Data = 
+export const emission2Data = 
 [{"name":"LFTW","CO2_CC":0,"NOX_CC":0,"COVNM_CC":0,"TSP_CC":0,"CO2_MC":0,"NOX_MC":0,"COVNM_MC":0,"TSP_MC":0,"CO2_LC":0,"NOX_LC":0,"COVNM_LC":0,"TSP_LC":0},
 {"name":"LFSN","CO2_CC":0,"NOX_CC":0,"COVNM_CC":0,"TSP_CC":0,"CO2_MC":0,"NOX_MC":0,"COVNM_MC":0,"TSP_MC":0,"CO2_LC":0,"NOX_LC":0,"COVNM_LC":0,"TSP_LC":0},
 {"name":"LFSL","CO2_CC":0,"NOX_CC":0,"COVNM_CC":0,"TSP_CC":0,"CO2_MC":0,"NOX_MC":0,"COVNM_MC":0,"TSP_MC":0,"CO2_LC":0,"NOX_LC":0,"COVNM_LC":0,"TSP_LC":0},

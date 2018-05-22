@@ -33,15 +33,15 @@ for(haul in hauls) {
 current_poll <- read.csv2(paste0("../csv/DataViz2_EMI_", year_max, ".csv"),header=TRUE);
 for(airport in airports_FR_codes) {
     for(p in pollutants) {
-	  for(h in hauls) {
+      for(h in hauls) {
         emissions[emissions$name == airport, paste0(p,"_",h)] <- sum(current_poll[current_poll$APT == airport & current_poll$FSC == h, p], na.rm=TRUE);  
-	  }
-	}
+      }
+    }
 }
   
 top10 <- data.frame(name = airports_FR_codes, dest_1 = '', pax_1 = 0, dest_2 = '', pax_2 = 0,
            dest_3 = '', pax_3 = 0, dest_4 = '', pax_4 = 0, dest_5 = '', pax_5 = 0, dest_6 = '', pax_6 = 0,
-		   dest_7 = '', pax_7 = 0, dest_8 = '', pax_8 = 0,dest_9 = '', pax_9 = 0, dest_10 = '', pax_10 = 0, stringsAsFactors=FALSE); 
+           dest_7 = '', pax_7 = 0, dest_8 = '', pax_8 = 0,dest_9 = '', pax_9 = 0, dest_10 = '', pax_10 = 0, stringsAsFactors=FALSE); 
 for(i in c(1:10)) {
  levels(top10[paste0("dest_",i)]) <- levels(airports$APT_NOM);
 }
@@ -58,32 +58,32 @@ for(i in c(1990:year_max)) {
   
   current_traffic <- read.csv2(paste0("../csv/DataViz2_TRA_",i,".csv"),header = TRUE);
   for(airport in airports_FR_codes) {
-	  for(haul in hauls) {
-	    traffics[traffics$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "PAX_FS"], na.rm = TRUE);
-		flights[flights$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "NVOLS"], na.rm = TRUE);
-	  }
+      for(haul in hauls) {
+        traffics[traffics$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "PAX_FS"], na.rm = TRUE);
+        flights[flights$name == airport, paste0(haul,"_",i)] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$FSC == haul, "NVOLS"], na.rm = TRUE);
+      }
   
   
     # 2016: special treatment
-	if(i == year_max) {
-	# Count number of destinations
-	  arrival_airports <- unique(current_traffic[current_traffic$DEP == airport, "ARR"], na.rm = TRUE);
+    if(i == year_max) {
+    # Count number of destinations
+      arrival_airports <- unique(current_traffic[current_traffic$DEP == airport, "ARR"], na.rm = TRUE);
       airports_FR[airports_FR$oaci == airport, "nb_destinations"] <- length(arrival_airports);
-	  
-	  # Make a top10
-	   if(length(arrival_airports) > 0) {
-	   top10_df <- data.frame(name = arrival_airports);
-	   top10_df$pax <- 0;
-	   for(arr in arrival_airports) {
-	     top10_df[top10_df$name == arr, "pax"] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$ARR == arr, "PAX_FS"], na.rm = TRUE);
-	   }
-	   top10_df <- top10_df[order(-top10_df$pax), ];
-	   for(j in c(1:10) ) {
-	   if(j <= nrow(top10_df)) { # Because some airports may have less than 10 destinations... 
-	    top10[top10$name == airport, paste0("dest_",j)] = airports[as.character(airports$APT_OACI) == as.character(top10_df[j,"name"]), "APT_NOM"];
+      
+      # Make a top10
+       if(length(arrival_airports) > 0) {
+       top10_df <- data.frame(name = arrival_airports);
+       top10_df$pax <- 0;
+       for(arr in arrival_airports) {
+         top10_df[top10_df$name == arr, "pax"] <- sum(current_traffic[current_traffic$DEP == airport & current_traffic$ARR == arr, "PAX_FS"], na.rm = TRUE);
+       }
+       top10_df <- top10_df[order(-top10_df$pax), ];
+       for(j in c(1:10) ) {
+       if(j <= nrow(top10_df)) { # Because some airports may have less than 10 destinations... 
+        top10[top10$name == airport, paste0("dest_",j)] = airports[as.character(airports$APT_OACI) == as.character(top10_df[j,"name"]), "APT_NOM"];
         top10[top10$name == airport, paste0("pax_",j)] = top10_df[j,"pax"];
-		}
-	  }
+        }
+      }
     }
     }
   }  
@@ -92,10 +92,10 @@ for(i in c(1990:year_max)) {
 
 
 ## Final step: export files
-writeLines(paste("export const airports2Data = ", toJSON(airports_FR),";", sep="\n"),"airports2.ts");
+writeLines(paste("export const airport2Data = ", toJSON(airports_FR),";", sep="\n"),"airports2.ts");
 
 writeLines(paste("export const top102Data = ",toJSON(top10),";", sep="\n"),"top102.ts");
 writeLines(paste("export const passengers2Data = ",toJSON(traffics),";", sep="\n"),"passengers2.ts");
-writeLines(paste("export const emissions2Data = ",toJSON(emissions),";", sep="\n"),"emissions2.ts");
+writeLines(paste("export const emission2Data = ",toJSON(emissions),";", sep="\n"),"emissions2.ts");
 writeLines(paste("export const flights2Data = ",toJSON(flights),";", sep="\n"),"flights2.ts");
 
