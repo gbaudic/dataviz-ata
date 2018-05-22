@@ -92,19 +92,10 @@ for(i in c(1990:year_max)) {
 
 
 ## Final step: export files
-writeLines(toJSON(airports_FR),"airports2.ts");
+writeLines(paste("export const airports2Data = ", toJSON(airports_FR),";", sep="\n"),"airports2.ts");
 
-writeLines(toJSON(top10),"top102.ts");
-writeLines(toJSON(traffics),"passengers2.ts");
-writeLines(toJSON(emissions),"emissions2.ts");
-writeLines(toJSON(flights),"flights2.ts");
+writeLines(paste("export const top102Data = ",toJSON(top10),";", sep="\n"),"top102.ts");
+writeLines(paste("export const passengers2Data = ",toJSON(traffics),";", sep="\n"),"passengers2.ts");
+writeLines(paste("export const emissions2Data = ",toJSON(emissions),";", sep="\n"),"emissions2.ts");
+writeLines(paste("export const flights2Data = ",toJSON(flights),";", sep="\n"),"flights2.ts");
 
-## Utility functions from Rosetta Code, covered by GNU FDL
-
-dms_to_rad <- function(d, m, s) (d + m / 60 + s / 3600) * pi / 180
- 
-great_circle_distance <- function(lat1, long1, lat2, long2) {
-   a <- sin(0.5 * (lat2 - lat1))
-   b <- sin(0.5 * (long2 - long1))
-   12742 * asin(sqrt(a * a + cos(lat1) * cos(lat2) * b * b))
-}
