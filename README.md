@@ -1,5 +1,5 @@
 # dataviz-ata
-Dépôt pour concours Assises du Transport Aérien (DGAC)
+Dépôt pour concours datavisualisation, organisé par la DGAC dans le cadre des Assises du Transport Aérien https://www.assisesdutransportaerien.gouv.fr/comprendre/les-actualites/data-lancement-dun-appel-projet-pour-la-conception-dune-application 
 
 ## Installation
 
@@ -29,3 +29,7 @@ Pour réexécuter les traitements de données, il faut le logiciel libre R.
 ## Licence
 
 GPL v3. Voir le fichier LICENCE pour plus de détails. 
+
+## Résultat
+
+Projet retenu pour la phase 2 du concours. 
