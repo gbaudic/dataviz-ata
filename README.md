@@ -19,12 +19,12 @@ Passage en production :
 
 ### Traitement de données
 
-Pour réexécuter les traitements de données, il faut le logiciel libre R.  
+Pour réexécuter les traitements de données, il faut le logiciel libre R. Le script se trouve dans `process/airports.R`.  
 * `install.package("jsonlite")` permet d'installer le paquet nécessaire à l'export en JSON, si celui-ci n'est pas déjà installé
 * modifier le répertoire d'exécution spécifié dans le script (commande `setwd(...)` au début de celui-ci) pour refléter l'emplacement exact
-* exécuter le script `airports.R` depuis une console R ou un IDE comme RStudio. Les résultats sont écrits dans 5 fichiers distincts dans le répertoire de travail.
+* exécuter le script depuis une console R ou un IDE comme RStudio. Les résultats sont écrits dans 5 fichiers distincts dans le répertoire de travail.
 * Il est ensuite recommandé (bien que pas indispensable) de rajouter des retours à la ligne dans les fichiers produits. La fonction rechercher-remplacer de la plupart des éditeurs de texte permet d'effectuer cette opération. 
-* déplacer les fichiers obtenus vers le répertoire `app/data`. Il faut ensuite transformer ces tableaux d'objets JSON en objets accessibles depuis le reste du code en leur donnant un nom. Pour cela, ajouter un `;` à la fin de chaque fichier, et `export const {nom_du_fichier}Data = ` au début. Exemple : pour le fichier `top102.ts`, utiliser `top102Data`. 
+* déplacer les fichiers obtenus vers le répertoire `app/data`. 
 
 ## Licence
 
