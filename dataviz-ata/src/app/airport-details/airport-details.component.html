@@ -1,10 +1,11 @@
 <div class="container" style="margin-top: 54px;">
-	<div *ngIf="showDatePicker">
-	    De
-		<input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990" (ngModelChange)="drawGraphs()">
-		à
-		<input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2018" (ngModelChange)="drawGraphs()">
-	</div>
+  <div *ngIf="showDatePicker">
+    <h2 class="text-center">{{description.name | titlecase}} ({{description.oaci}})</h2>
+    De
+    <input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990" (ngModelChange)="drawGraphs()">
+    à
+    <input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2018" (ngModelChange)="drawGraphs()">
+  </div>
 
 	<h2>Nombre de passagers par faisceau</h2>
 	<div>

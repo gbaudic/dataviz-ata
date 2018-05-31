@@ -4,6 +4,7 @@ import { TrafficService, BarSeries } from 'app/traffic.service';
 import { EmissionsService } from 'app/emissions.service';
 import { AirportListService } from 'app/airport-list.service';
 import { Chart } from 'chart.js';
+import { AirportDescription } from 'app/airport/airport.component';
 
 @Component({
   selector: 'app-airport-details',
@@ -15,6 +16,7 @@ export class AirportDetailsComponent implements OnInit {
   @Input() oaci: string;
   @Input() yearEnd = 2018;
   @Input() showDatePicker = true; // to allow the component to be used alone or not
+  private description: AirportDescription;
 
   @ViewChild('passengersCanvas') canvas1;
   @ViewChild('flightsCanvas') canvas2;
@@ -30,7 +32,11 @@ export class AirportDetailsComponent implements OnInit {
   ngOnInit() {
     this.oaci = this.route.snapshot.paramMap.get('oaci');
 
-	  if(this.oaci) {
+    if (this.oaci) {
+      this.airports.getAirportDescription(this.oaci).subscribe(data => {
+        this.description = data;
+      });
+
 	    this.drawGraphs();
 	  }
   }
