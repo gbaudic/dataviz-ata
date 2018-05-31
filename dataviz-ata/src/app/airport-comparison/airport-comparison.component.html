@@ -1,33 +1,50 @@
 <div class="container">
-	<div class="row" style="padding-bottom: 10px;">
-		<div class="col text-center">
-		De
-		<input type="number" id="startYear" [(ngModel)]="startYear" name="startYear" value="1990">
-		à
-		<input type="number" id="endYear" [(ngModel)]="endYear" name="endYear" value="2018">
+  <div class="row" style="padding-bottom: 10px;">
+    <div class="col text-center">
+      De
+      <input type="number" id="startYear" [(ngModel)]="startYear" name="startYear" value="1990">
+      à
+      <input type="number" id="endYear" [(ngModel)]="endYear" name="endYear" value="2018">
 
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-6 text-center">
-			Aéroport 1
-		  <select id="airport1" [(ngModel)]="airport1" name="airport1">
-		    <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}}</option>
-		  </select>
-		</div>
-	    <div class="col-6 text-center">
-		Aéroport 2
-		  <select id="airport2" [(ngModel)]="airport2" name="airport2">
-		    <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}}</option>
-		  </select>
-		</div>
-	</div>
-	<div class="row">
-	    <div class="col-6">
-		  <app-airport-details [yearStart]="startYear" [yearEnd]="endYear" [showDatePicker]="false" [oaci]="airport1" #ap1></app-airport-details>
-		</div>
-		<div class="col-6">
-		  <app-airport-details [yearStart]="startYear" [yearEnd]="endYear" [showDatePicker]="false" [oaci]="airport2" #ap2></app-airport-details>
-		</div>
-	</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 text-center">
+      Aéroport 1
+      <select id="airport1" [(ngModel)]="airport1" name="airport1">
+        <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}} ({{airport.oaci}})</option>
+      </select>
+    </div>
+    <div class="col-6 text-center">
+      Aéroport 2
+      <select id="airport2" [(ngModel)]="airport2" name="airport2">
+        <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}} ({{airport.oaci}})</option>
+      </select>
+    </div>
+  </div>
+  <h4 class="text-center" *ngIf="airport1 && airport2">Données {{lastDataYear}}</h4>
+  <div class="row" *ngIf="airport1 && airport2">
+
+    <div class="col order-1 text-center">
+      0<br />
+      {{findDescription(airport1).nb_destinations}}
+    </div>
+    <div class="col order-2 order-sm-1 font-weight-bold text-center">
+      Passagers<br />
+      Destinations<br />
+      Top 10
+    </div>
+    <div class="col order-3 text-center">
+      0<br />
+      {{findDescription(airport2).nb_destinations}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <app-airport-details [yearStart]="startYear" [yearEnd]="endYear" [showDatePicker]="false" [oaci]="airport1" #ap1></app-airport-details>
+    </div>
+    <div class="col-6">
+      <app-airport-details [yearStart]="startYear" [yearEnd]="endYear" [showDatePicker]="false" [oaci]="airport2" #ap2></app-airport-details>
+    </div>
+  </div>
 </div>

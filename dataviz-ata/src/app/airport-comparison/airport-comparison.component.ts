@@ -11,6 +11,7 @@ import { AirportDetailsComponent } from 'app/airport-details/airport-details.com
 export class AirportComparisonComponent implements OnInit {
   startYear: number = 1990;
   endYear: number = 2018;
+  lastDataYear = 2018;
   airport1: string;
   airport2: string;
   airports: AirportDescription[] = [];
@@ -20,6 +21,14 @@ export class AirportComparisonComponent implements OnInit {
   ngOnInit() {
     // load airport list from service to populate selects
     this.listServ.getAirportList().subscribe(res => this.airports = res);
+  }
+
+  findDescription(oaci: string): AirportDescription {
+    for (let ap of this.airports) {
+      if (ap.oaci === oaci) {
+        return ap;
+      }
+    }
   }
 
 }
