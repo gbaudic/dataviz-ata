@@ -5,6 +5,8 @@ import { EmissionsService } from 'app/emissions.service';
 import { AirportListService } from 'app/airport-list.service';
 import { Chart } from 'chart.js';
 import { AirportDescription } from 'app/airport/airport.component';
+import fontawesome from '@fortawesome/fontawesome';
+import * as faCalendarAlt from '@fortawesome/fontawesome-free-solid/faCalendarAlt';
 
 @Component({
   selector: 'app-airport-details',
@@ -27,7 +29,9 @@ export class AirportDetailsComponent implements OnInit {
   constructor(private traffic: TrafficService,
               private emissions: EmissionsService,
 			        private airports: AirportListService,
-			        private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+    fontawesome.library.add(faCalendarAlt);
+  }
 
   ngOnInit() {
     this.oaci = this.route.snapshot.paramMap.get('oaci');
