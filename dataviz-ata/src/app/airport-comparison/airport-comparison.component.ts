@@ -18,9 +18,9 @@ export class AirportComparisonComponent implements OnInit {
   airport1: string;
   airport2: string;
   airports: AirportDescription[] = [];
-  airport1_top10: Array<[string, number]>;
-  airport2_top10: Array<[string, number]>;
+  tops10: Array<Array<[string, number]>> = [[], []];
   selectedAirportsDescription: AirportDescription[] = [];
+  selectedAirportsPassengers: number[] = [0, 0];
 
   constructor(private listServ: AirportListService,
     private top10Serv: TrafficService) {
@@ -31,8 +31,7 @@ export class AirportComparisonComponent implements OnInit {
     // load airport list from service to populate selects
     this.listServ.getAirportList().subscribe(res => {
       this.airports = res;
-      this.selectedAirportsDescription.push(this.airports[0]);
-      this.selectedAirportsDescription.push(this.airports[0]);
+      this.selectedAirportsDescription.push(this.airports[0], this.airports[0]);
     });
   }
 
@@ -48,11 +47,15 @@ export class AirportComparisonComponent implements OnInit {
     this.selectedAirportsDescription[index - 1] = this.findDescription(event);
 
     this.top10Serv.getTop10(event).subscribe(res => {
-      if (index == 1) {
-        this.airport1_top10 = res;
-      } else {
-        this.airport2_top10 = res;
+      this.tops10[index - 1] = res;
+    });
+
+    this.top10Serv.getTraffic(event, this.lastDataYear, this.lastDataYear).subscribe(res => {
+      let passengers = 0;
+      for (let i = 0; i < res.length; i++) {
+        passengers += res[i].data[0];
       }
+      this.selectedAirportsPassengers[index - 1] = passengers;
     });
   }
 

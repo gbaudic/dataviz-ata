@@ -27,8 +27,8 @@ export class AirportDetailsComponent implements OnInit {
   flightsChart: any;
 
   constructor(private traffic: TrafficService,
-              private emissions: EmissionsService,
-			        private airports: AirportListService,
+    private emissions: EmissionsService,
+    private airports: AirportListService,
     private route: ActivatedRoute) {
     fontawesome.library.add(faCalendarAlt);
   }
@@ -41,79 +41,79 @@ export class AirportDetailsComponent implements OnInit {
         this.description = data;
       });
 
-	    this.drawGraphs();
-	  }
+      this.drawGraphs();
+    }
   }
 
   drawGraphs(): void {
     this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
-		data => {
-		this.passengersChart = new Chart(this.canvas1.nativeElement,
-		{
-		type: 'bar',
-		data: {labels: this.makeXAxis(), datasets: data},
-		options: {
-			scales: {
-				xAxes: [{
-					stacked: true
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-		})
-	  });
+      data => {
+        this.passengersChart = new Chart(this.canvas1.nativeElement,
+          {
+            type: 'bar',
+            data: { labels: this.makeXAxis(), datasets: data },
+            options: {
+              scales: {
+                xAxes: [{
+                  stacked: true
+                }],
+                yAxes: [{
+                  stacked: true
+                }]
+              }
+            }
+          })
+      });
 
-	  this.traffic.getFlights(this.oaci, this.yearStart, this.yearEnd).subscribe(
-		data => {
-		this.flightsChart = new Chart(this.canvas2.nativeElement,
-		{
-		type: 'bar',
-		data: {labels: this.makeXAxis(), datasets: data},
-		options: {
-			scales: {
-				xAxes: [{
-					stacked: true
-				}],
-				yAxes: [{
-					stacked: true
-				}]
-			}
-		}
-		})
-	  });
+    this.traffic.getFlights(this.oaci, this.yearStart, this.yearEnd).subscribe(
+      data => {
+        this.flightsChart = new Chart(this.canvas2.nativeElement,
+          {
+            type: 'bar',
+            data: { labels: this.makeXAxis(), datasets: data },
+            options: {
+              scales: {
+                xAxes: [{
+                  stacked: true
+                }],
+                yAxes: [{
+                  stacked: true
+                }]
+              }
+            }
+          })
+      });
   }
 
-  makeXAxis() : string[] {
+  makeXAxis(): string[] {
     let result: string[] = [];
-	for(let i = this.yearStart ; i <= this.yearEnd ; i++) {
-	  result.push(i.toString());
-	}
-	return result;
+    for (let i = this.yearStart; i <= this.yearEnd; i++) {
+      result.push(i.toString());
+    }
+    return result;
   }
 
   ngOnChanges(changes: SimpleChanges) {
     let hasChanged = false;
 
-    if(changes.yearStart) {
-	  this.yearStart = changes.yearStart.currentValue;
-	  hasChanged = true;
-	}
+    if (changes.yearStart) {
+      this.yearStart = changes.yearStart.currentValue;
+      hasChanged = true;
+    }
 
-	if(changes.yearEnd) {
-	  this.yearEnd = changes.yearEnd.currentValue;
-	  hasChanged = true;
-	}
+    if (changes.yearEnd) {
+      this.yearEnd = changes.yearEnd.currentValue;
+      hasChanged = true;
+    }
 
-	if(changes.oaci) {
-	  this.oaci = changes.oaci.currentValue;
-	  hasChanged = true;
-	}
+    if (changes.oaci) {
+      this.oaci = changes.oaci.currentValue;
+      hasChanged = true;
+    }
 
-	if(hasChanged) {
-	  this.drawGraphs();
-	}
+    if (hasChanged) {
+      this.drawGraphs();
+    }
   }
 
 }
