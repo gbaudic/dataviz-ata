@@ -48,43 +48,54 @@ export class AirportDetailsComponent implements OnInit {
   drawGraphs(): void {
     this.traffic.getTraffic(this.oaci, this.yearStart, this.yearEnd).subscribe(
       data => {
-        this.passengersChart = new Chart(this.canvas1.nativeElement,
-          {
-            type: 'bar',
-            data: { labels: this.makeXAxis(), datasets: data },
-            options: {
-              scales: {
-                xAxes: [{
-                  stacked: true
-                }],
-                yAxes: [{
-                  stacked: true
-                }]
+        if (this.passengersChart) {
+          this.passengersChart.data = { labels: this.makeXAxis(), datasets: data };
+          this.passengersChart.update();
+        } else {
+          this.passengersChart = new Chart(this.canvas1.nativeElement,
+            {
+              type: 'bar',
+              data: { labels: this.makeXAxis(), datasets: data },
+              options: {
+                scales: {
+                  xAxes: [{
+                    stacked: true
+                  }],
+                  yAxes: [{
+                    stacked: true
+                  }]
+                }
               }
-            }
-          })
+            });
+        }
       });
 
     this.traffic.getFlights(this.oaci, this.yearStart, this.yearEnd).subscribe(
       data => {
-        this.flightsChart = new Chart(this.canvas2.nativeElement,
-          {
-            type: 'bar',
-            data: { labels: this.makeXAxis(), datasets: data },
-            options: {
-              scales: {
-                xAxes: [{
-                  stacked: true
-                }],
-                yAxes: [{
-                  stacked: true
-                }]
+        if (this.flightsChart) {
+          this.flightsChart.data = { labels: this.makeXAxis(), datasets: data };
+          this.flightsChart.update();
+        } else {
+          this.flightsChart = new Chart(this.canvas2.nativeElement,
+            {
+              type: 'bar',
+              data: { labels: this.makeXAxis(), datasets: data },
+              options: {
+                scales: {
+                  xAxes: [{
+                    stacked: true
+                  }],
+                  yAxes: [{
+                    stacked: true
+                  }]
+                }
               }
-            }
-          })
+            });
+        }
       });
   }
 
+  /** Helper function to produce x year labels */
   makeXAxis(): string[] {
     let result: string[] = [];
     for (let i = this.yearStart; i <= this.yearEnd; i++) {

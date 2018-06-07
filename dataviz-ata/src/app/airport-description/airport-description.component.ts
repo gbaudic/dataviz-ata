@@ -60,84 +60,95 @@ export class AirportDescriptionComponent implements OnInit {
       this.lastPassengers = sums[sums.length - 1];
 
       // todo: graph
-      this.passengersPerYearChart = new Chart('passengersPerYear',
-        {
-          type: 'line',
-          data: {
-            labels: ['1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004',
-              '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'],
-            datasets: [{
-              backgroundColor: 'rgb(54, 162, 235)',
-              borderColor: 'rgb(54, 162, 235)',
-              data: sums,
-              fill: false,
-            }]
-          },
-          options: {
-            responsive: true,
-            tooltips: {
-              mode: 'index',
-              intersect: false,
-            },
-            legend: {
-              display: false
-            },
-            hover: {
-              mode: 'nearest',
-              intersect: true
-            },
-            scales: {
-              xAxes: [{
-                display: true,
-                scaleLabel: {
-                  display: false,
-                  labelString: 'Année'
-                }
-              }],
-              yAxes: [{
-                display: true,
-                scaleLabel: {
-                  display: false,
-                  labelString: 'Valeur'
-                }
+      if (this.passengersPerYearChart) {
+        this.passengersPerYearChart.data.datasets[0].data = sums;
+        this.passengersPerYearChart.update();
+      } else {
+        this.passengersPerYearChart = new Chart('passengersPerYear',
+          {
+            type: 'line',
+            data: {
+              labels: ['1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004',
+                '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'],
+              datasets: [{
+                backgroundColor: 'rgb(54, 162, 235)',
+                borderColor: 'rgb(54, 162, 235)',
+                data: sums,
+                fill: false,
               }]
+            },
+            options: {
+              responsive: true,
+              tooltips: {
+                mode: 'index',
+                intersect: false,
+              },
+              legend: {
+                display: false
+              },
+              hover: {
+                mode: 'nearest',
+                intersect: true
+              },
+              scales: {
+                xAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: 'Année'
+                  }
+                }],
+                yAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: false,
+                    labelString: 'Valeur'
+                  }
+                }]
+              }
             }
           }
-        }
-      );
+        );
+      }
     });
 
     this.traffic.getFlights(this.oaci, this.lastYear, this.lastYear).subscribe(data => {
       let titles = [data[0].label, data[1].label, data[2].label];
       let values = [data[0].data[0], data[1].data[0], data[2].data[0]];
 
-      this.flightsPerTypeChart = new Chart('flightsPerType',
-        {
-          type: 'doughnut',
-          data: {
-            datasets: [{
-              data: values,
-              backgroundColor: [
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)'
-              ],
-              label: 'Dataset 1'
-            }],
-            labels: titles
-          },
-          options: {
-            responsive: true,
-            legend: {
-              position: 'top',
+      if (this.flightsPerTypeChart) {
+        this.flightsPerTypeChart.data.labels = titles;
+        this.flightsPerTypeChart.data.datasets[0].data = values;
+        this.flightsPerTypeChart.update();
+      } else {
+        this.flightsPerTypeChart = new Chart('flightsPerType',
+          {
+            type: 'doughnut',
+            data: {
+              datasets: [{
+                data: values,
+                backgroundColor: [
+                  'rgb(255, 205, 86)',
+                  'rgb(75, 192, 192)',
+                  'rgb(54, 162, 235)'
+                ],
+                label: 'Dataset 1'
+              }],
+              labels: titles
             },
-            animation: {
-              animateScale: true,
-              animateRotate: true
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true
+              }
             }
           }
-        }
-      );
+        );
+      }
     });
   }
 
