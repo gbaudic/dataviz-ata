@@ -3,9 +3,9 @@
     <h2 class="text-center">{{description.name | titlecase}} ({{description.oaci}})</h2>
     <p class="text-center"><span class="fas fa-calendar-alt"></span> 
     De
-    <input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990" (ngModelChange)="drawGraphs()">
+    <input type="number" id="startYear" [(ngModel)]="yearStart" name="startYear" value="1990" min="1990" max="{{yearEnd}}" (ngModelChange)="drawGraphs()">
     à
-    <input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2018" (ngModelChange)="drawGraphs()"></p>
+    <input type="number" id="endYear" [(ngModel)]="yearEnd" name="endYear" value="2018" max="2018" min={{yearStart}} (ngModelChange)="drawGraphs()"></p>
   </div>
 
 	<h2>Nombre de passagers par faisceau</h2>
