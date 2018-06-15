@@ -3,9 +3,9 @@
     <div class="col text-center">
       <span class="fas fa-calendar-alt"></span> 
       De
-      <input type="number" id="startYear" [(ngModel)]="startYear" name="startYear" value="1990">
+      <input type="number" id="startYear" [(ngModel)]="startYear" name="startYear" value="1990" min="1990" max="{{endYear}}">
       à
-      <input type="number" id="endYear" [(ngModel)]="endYear" name="endYear" value="2018">
+      <input type="number" id="endYear" [(ngModel)]="endYear" name="endYear" value="2018" max="{{lastDataYear}}" min="{{startYear}}">
 
     </div>
   </div>
