@@ -13,13 +13,17 @@
     <div class="col-6 text-center">
       Aéroport 1
       <select id="airport1" [ngModel]="airport1" name="airport1" (ngModelChange)="airport1=$event;loadExtra($event,1)">
-        <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}} ({{airport.oaci}})</option>
+        <option *ngFor="let airport of airports.sort(airportNameSort)" value="{{airport.oaci}}">
+		  {{airport.name | titlecase}} ({{airport.oaci}})
+		</option>
       </select>
     </div>
     <div class="col-6 text-center">
       Aéroport 2
       <select id="airport2" [ngModel]="airport2" name="airport2" (ngModelChange)="airport2=$event;loadExtra($event,2)">
-        <option *ngFor="let airport of airports" value="{{airport.oaci}}">{{airport.name | titlecase}} ({{airport.oaci}})</option>
+        <option *ngFor="let airport of airports.sort(airportNameSort)" value="{{airport.oaci}}">
+		  {{airport.name | titlecase}} ({{airport.oaci}})
+		</option>
       </select>
     </div>
   </div>

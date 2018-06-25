@@ -42,6 +42,16 @@ export class AirportComparisonComponent implements OnInit {
       }
     }
   }
+  
+  airportNameSort(a: AirportDescription, b: AirportDescription){
+    if(a.name < b.name) {
+	  return -1;
+	} 
+	if (a.name > b.name){
+	  return 1;
+	}
+	return 0;
+  }
 
   loadExtra(event: any, index: number) {
     this.selectedAirportsDescription[index - 1] = this.findDescription(event);
