@@ -15,7 +15,7 @@ Si certaines dépendances sont manquantes, il faudra les installer à la main. L
 `npm serve`  démarre un serveur de développement pour afficher l'interface graphique. Les données sont incluses à la compilation : le résultat est donc utilisable de façon autonome. 
 
 Passage en production :  
-`npm build --prod`. Les fichiers résultants se trouvent dans un dossier dist/ dont il suffit de copier le contenu pour déployer l'application. 
+`npm build --prod -vc=true`. Les fichiers résultants se trouvent dans un dossier dist/ dont il suffit de copier le contenu pour déployer l'application. 
 
 ### Traitement de données
 
